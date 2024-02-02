@@ -27,6 +27,7 @@
       "@utils/*": ["./src/utils/*"],
       "@style/*": ["./src/style/*"],
       "@assets/*": ["./src/assets/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@components/*": ["./src/components/*"]
     }
   },
