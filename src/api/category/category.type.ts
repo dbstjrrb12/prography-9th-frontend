@@ -21,4 +21,6 @@ interface CategoryItem {
   strCategoryDescription: string;
 }
 
-export type CategoryList = { categories: CategoryItem[] };
+type CategoryList = { categories: CategoryItem[] };
+
+export type { CategoryList, CategoryType };

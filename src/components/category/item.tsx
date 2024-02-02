@@ -3,6 +3,7 @@ import { ChangeEventHandler } from 'react';
 
 type CategoryItemProps = {
   id: string;
+  checked?: boolean;
   label: string;
   onChange: ChangeEventHandler;
   className?: string;
@@ -11,6 +12,7 @@ type CategoryItemProps = {
 const CategoryItem = ({
   id,
   label,
+  checked = false,
   className,
   onChange,
 }: CategoryItemProps) => {
@@ -19,6 +21,7 @@ const CategoryItem = ({
       <input
         id={id}
         type="checkbox"
+        checked={checked}
         onChange={onChange}
         className="a11yHidden peer"
       />
