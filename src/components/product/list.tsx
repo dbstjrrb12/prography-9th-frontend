@@ -6,6 +6,7 @@ import cn from '@utils/cn';
 
 import ProductItem from './item';
 import { OrderType } from './product.type';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   className?: string;
@@ -16,6 +17,7 @@ type Props = {
 };
 
 const ProductList = ({ className, filter }: Props) => {
+  const listRef = useRef<HTMLUListElement | null>(null);
   const { query, getQueryValue } = useHistory();
   const categoryList = getQueryValue(query, 'category') as CategoryType[];
 
@@ -26,6 +28,7 @@ const ProductList = ({ className, filter }: Props) => {
   } = useProductList(categoryList, {
     suspense: true,
     keepPreviousData: true,
+    refetchOnWindowFocus: false,
   });
 
   productList.sort((a, b) => {
@@ -38,8 +41,15 @@ const ProductList = ({ className, filter }: Props) => {
       : a.strMeal.localeCompare(b.strMeal);
   });
 
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo({ top: 0 });
+    }
+  }, [categoryList]);
+
   return (
     <ul
+      ref={listRef}
       className={cn(
         'grid grid-cols-1 gap-x-2 gap-y-3',
         {
