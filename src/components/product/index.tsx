@@ -5,6 +5,7 @@ import Flex from '@components/common/flex';
 import Filter from '@components/common/filter';
 import useHistory from '@/src/hooks/use-history';
 import { OrderType } from './product.type';
+import ProductsLoader from '../loader/product/loader';
 
 const ProductsGrid = () => {
   const { query, getQueryValue, updateQuery } = useHistory();
@@ -53,7 +54,7 @@ const ProductsGrid = () => {
           </Flex.Row>
         </Flex>
 
-        <Suspense fallback={<>loading...</>}>
+        <Suspense fallback={<ProductsLoader cols={cols} />}>
           <ProductList filter={{ cols, order }} />
         </Suspense>
       </Flex.Col>
