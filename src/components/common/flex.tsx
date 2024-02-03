@@ -7,15 +7,28 @@ type Props = PropsWithChildren<{
 }>;
 
 const Flex = ({ children, className }: Props) => {
-  const row = Children.toArray(children).filter(isReactElementWithName('Row'));
-  const col = Children.toArray(children).filter(isReactElementWithName('Col'));
+  const row = Children.toArray(children).filter(
+    isReactElementWithName<Props>('Row')
+  );
+  const col = Children.toArray(children).filter(
+    isReactElementWithName<Props>('Col')
+  );
+
+  const rowClassName = row && row.map(({ props }) => props.className);
+  const colClassName = col && col.map(({ props }) => props.className);
 
   return (
     <div
-      className={cn(className, 'flex', {
-        'flex-col': col,
-        'flex-row': row,
-      })}
+      className={cn(
+        className,
+        'flex',
+        {
+          'flex-col': col.length > 0,
+          'flex-row': row.length > 0,
+        },
+        ...rowClassName,
+        ...colClassName
+      )}
     >
       {row}
       {col}
@@ -23,12 +36,12 @@ const Flex = ({ children, className }: Props) => {
   );
 };
 
-Flex.Row = function Row({ children, className }: Props) {
-  return <div className={className}>{children}</div>;
+Flex.Row = function Row({ children }: Props) {
+  return <>{children}</>;
 };
 
-Flex.Col = function Col({ children, className }: Props) {
-  return <div className={className}>{children}</div>;
+Flex.Col = function Col({ children }: Props) {
+  return <>{children}</>;
 };
 
 export default Flex;
