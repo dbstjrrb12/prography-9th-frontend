@@ -42,7 +42,7 @@ const ProductsGrid = () => {
               name="보기개수"
               options={colOptions}
               onChange={handleColChange}
-              className="border border-gray-400 rounded px-2 py-1"
+              className="border border-gray-400 rounded px-2 py-1 hidden md:block"
             />
             <Filter
               name="정렬"
