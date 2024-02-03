@@ -35,7 +35,7 @@ const ProductsGrid = () => {
   };
 
   return (
-    <Flex className="flex-auto basis-[70%]">
+    <Flex className="flex-auto h-[calc(100vh-150px)] overflow-hidden">
       <Flex.Col>
         <Flex className="mb-5 space-x-2 justify-end">
           <Flex.Row>
@@ -55,7 +55,7 @@ const ProductsGrid = () => {
         </Flex>
 
         <Suspense fallback={<ProductsLoader cols={cols} />}>
-          <ProductList filter={{ cols, order }} />
+          <ProductList filter={{ cols, order }} className="flex-auto overflow-scroll" />
         </Suspense>
       </Flex.Col>
     </Flex>
