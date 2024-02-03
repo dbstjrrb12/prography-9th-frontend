@@ -25,7 +25,7 @@ const CategoryList = ({ className }: Props) => {
         ];
       }
 
-      updateQuery({ category: categoryValues });
+      updateQuery({ ...query, category: categoryValues });
     };
 
   return (
