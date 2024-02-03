@@ -33,9 +33,9 @@ const ProductList = ({ className, filter }: Props) => {
       return a.idMeal > b.idMeal ? -1 : 1;
     }
 
-    if (a < b) return filter.order === 'desc' ? 1 : -1;
-    if (a > b) return filter.order === 'desc' ? -1 : 1;
-    return 0;
+    return filter.order === 'desc'
+      ? b.strMeal.localeCompare(a.strMeal)
+      : a.strMeal.localeCompare(b.strMeal);
   });
 
   return (
