@@ -13,7 +13,7 @@ interface Props extends PropsWithChildren {
 const Layout = ({ className, children }: Props) => {
   return (
     <div className={cn('w-[100vw] px-20', className)}>
-      <header className="w-full pt-12 pb-8">
+      <header className="w-full pt-12 pb-8 fixed bg-white z-10">
         <Image
           src={logoImage}
           alt="프로그라피 로고"
@@ -22,7 +22,7 @@ const Layout = ({ className, children }: Props) => {
           lazy={false}
         />
       </header>
-      <main>{children}</main>
+      <main className="pt-top-header">{children}</main>
     </div>
   );
 };
