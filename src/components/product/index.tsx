@@ -1,11 +1,11 @@
 import { ChangeEventHandler, Suspense, useState } from 'react';
 import ProductList from './list';
 
-import Flex from '@components/common/flex';
 import Filter from '@components/common/filter';
 import useHistory from '@/src/hooks/use-history';
 import { OrderType } from './product.type';
 import ProductsLoader from '../loader/product/loader';
+import Flex from '../common/flex';
 
 const ProductsGrid = () => {
   const { query, getQueryValue, updateQuery } = useHistory();
@@ -35,29 +35,25 @@ const ProductsGrid = () => {
   };
 
   return (
-    <Flex className="flex-auto h-[calc(100vh-150px)] overflow-hidden">
-      <Flex.Col>
-        <Flex className="mb-5 space-x-2 justify-end">
-          <Flex.Row>
-            <Filter
-              name="보기개수"
-              options={colOptions}
-              onChange={handleColChange}
-              className="border border-gray-400 rounded px-2 py-1 hidden md:block"
-            />
-            <Filter
-              name="정렬"
-              options={orderOptions}
-              onChange={handleOrderChange}
-              className="border border-gray-400 rounded px-2 py-1"
-            />
-          </Flex.Row>
-        </Flex>
+    <Flex col className="flex-auto h-[calc(100vh-150px)] overflow-hidden">
+      <Flex className="mb-5 space-x-2 justify-end">
+        <Filter
+          name="보기개수"
+          options={colOptions}
+          onChange={handleColChange}
+          className="border border-gray-400 rounded px-2 py-1 hidden md:block"
+        />
+        <Filter
+          name="정렬"
+          options={orderOptions}
+          onChange={handleOrderChange}
+          className="border border-gray-400 rounded px-2 py-1"
+        />
+      </Flex>
 
-        <Suspense fallback={<ProductsLoader cols={cols} />}>
-          <ProductList filter={{ cols, order }} className="flex-auto overflow-scroll" />
-        </Suspense>
-      </Flex.Col>
+      <Suspense fallback={<ProductsLoader cols={cols} />}>
+        <ProductList filter={{ cols, order }} className="flex-auto overflow-scroll" />
+      </Suspense>
     </Flex>
   );
 };

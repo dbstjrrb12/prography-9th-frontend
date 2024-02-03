@@ -1,47 +1,22 @@
-import { isReactElementWithName } from '@/src/utils/validation';
 import cn from '@utils/cn';
-import { Children, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<{
   className?: string;
+
+  col?: boolean;
 }>;
 
-const Flex = ({ children, className }: Props) => {
-  const row = Children.toArray(children).filter(
-    isReactElementWithName<Props>('Row')
-  );
-  const col = Children.toArray(children).filter(
-    isReactElementWithName<Props>('Col')
-  );
-
-  const rowClassName = row && row.map(({ props }) => props.className);
-  const colClassName = col && col.map(({ props }) => props.className);
-
+const Flex = ({ children, className, col }: Props) => {
   return (
     <div
-      className={cn(
-        className,
-        'flex',
-        {
-          'flex-col': col.length > 0,
-          'flex-row': row.length > 0,
-        },
-        ...rowClassName,
-        ...colClassName
-      )}
+      className={cn(className, 'flex', {
+        'flex-col': col,
+      })}
     >
-      {row}
-      {col}
+      {children}
     </div>
   );
-};
-
-Flex.Row = function Row({ children }: Props) {
-  return <>{children}</>;
-};
-
-Flex.Col = function Col({ children }: Props) {
-  return <>{children}</>;
 };
 
 export default Flex;

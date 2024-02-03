@@ -1,5 +1,6 @@
-import Flex from '@components/common/flex';
+import cn from '@utils/cn';
 import Image from '@components/common/image';
+import Flex from '../common/flex';
 
 type Props = {
   title: string;
@@ -12,11 +13,9 @@ type Props = {
 
 const ProductItem = ({ title, media: { url, lazy }, className }: Props) => {
   return (
-    <Flex className={className}>
-      <Flex.Col>
-        <Image src={url} lazy={lazy} className="flex-auto rounded-lg object-fill aspect-square" />
-        <p className="">{title}</p>
-      </Flex.Col>
+    <Flex col className={cn(className)}>
+      <Image src={url} lazy={lazy} className="flex-auto rounded-lg object-fill aspect-square" />
+      <p className="">{title}</p>
     </Flex>
   );
 };
