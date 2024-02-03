@@ -14,7 +14,7 @@ const ProductItem = ({ title, media: { url, lazy }, className }: Props) => {
   return (
     <Flex className={className}>
       <Flex.Col>
-        <Image src={url} lazy={lazy} className="flex-auto rounded-lg" />
+        <Image src={url} lazy={lazy} className="flex-auto rounded-lg object-fill aspect-square" />
         <p className="">{title}</p>
       </Flex.Col>
     </Flex>
