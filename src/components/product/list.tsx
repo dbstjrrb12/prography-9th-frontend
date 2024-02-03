@@ -1,9 +1,10 @@
-import type { ProductItemType } from '@/src/api/product.ts/product.type';
-import { useProductList } from '@/src/api/product.ts/use-product-list';
+import { useProductList } from '@api/product.ts/use-product-list';
+import { CategoryType } from '@api/category/category.type';
+import Observer from '@components/common/observer';
+import useHistory from '@hooks/use-history';
+import cn from '@utils/cn';
+
 import ProductItem from './item';
-import cn from '@/src/utils/cn';
-import useHistory from '@/src/hooks/use-history';
-import { CategoryType } from '@/src/api/category/category.type';
 import { OrderType } from './product.type';
 
 type Props = {
@@ -18,14 +19,14 @@ const ProductList = ({ className, filter }: Props) => {
   const { query, getQueryValue } = useHistory();
   const categoryList = getQueryValue(query, 'category') as CategoryType[];
 
-  const queryResults = useProductList(categoryList, {
+  const {
+    data: productList,
+    fetchNextPage,
+    isLast,
+  } = useProductList(categoryList, {
     suspense: true,
     keepPreviousData: true,
   });
-
-  const productList = queryResults.reduce((acc: ProductItemType[], cur) => {
-    return cur.data ? [...acc, ...cur.data] : [...acc];
-  }, []);
 
   productList.sort((a, b) => {
     if (filter.order === 'new') {
@@ -55,6 +56,7 @@ const ProductList = ({ className, filter }: Props) => {
           </li>
         );
       })}
+      <Observer callback={fetchNextPage} hidden={isLast} />
     </ul>
   );
 };
