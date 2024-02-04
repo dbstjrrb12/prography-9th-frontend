@@ -19,12 +19,11 @@ const useCategoryList = (
     refetchOnWindowFocus: false,
     select: (data) => {
       const categoryList = data.data.categories;
-      categoryList.sort((a, b) =>
-        Number(a.idCategory) < Number(b.idCategory) ? -1 : 1
-      );
+      categoryList.sort((a, b) => (Number(a.idCategory) < Number(b.idCategory) ? -1 : 1));
 
       return categoryList;
     },
+    retry: 1,
     ...options,
   });
 };

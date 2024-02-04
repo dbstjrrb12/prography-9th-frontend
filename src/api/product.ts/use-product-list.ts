@@ -13,12 +13,7 @@ const productListApi = async (category: CategoryType) => {
 
 const useProductList = (
   categories: CategoryType[],
-  options?: UseQueryOptions<
-    AxiosResponse<ProductList>,
-    AxiosError,
-    ProductList['meals'],
-    string[]
-  >
+  options?: UseQueryOptions<AxiosResponse<ProductList>, AxiosError, ProductList['meals'], string[]>
 ) => {
   const queryResults = useQueries({
     queries: categories.map((category) => ({
@@ -26,6 +21,7 @@ const useProductList = (
       queryFn: () => productListApi(category),
       select: (data: AxiosResponse<ProductList>) => data.data['meals'],
       staleTime: 3000,
+      retry: 1,
       ...options,
     })),
   }).reduce((acc: ProductItemType[], cur) => {
@@ -34,9 +30,7 @@ const useProductList = (
 
   const [index, setIndex] = useState(20);
   const fetchNextPage = () => {
-    setIndex((prev) =>
-      prev + 20 < queryResults.length ? prev + 20 : queryResults.length
-    );
+    setIndex((prev) => (prev + 20 < queryResults.length ? prev + 20 : queryResults.length));
   };
 
   return {
