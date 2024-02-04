@@ -7,6 +7,9 @@ import { OrderType } from './product.type';
 import ProductsLoader from '../loader/product/loader';
 import Flex from '../common/flex';
 
+import QueryErrorBoundary from '../common/error-boundary';
+import ErrorFallback from '../common/error-fallback';
+
 const ProductsGrid = () => {
   const { query, getQueryValue, updateQuery } = useHistory();
   const filterValue = (getQueryValue<OrderType>(query, 'filter') || ['new'])[0];
@@ -35,7 +38,7 @@ const ProductsGrid = () => {
   };
 
   return (
-    <Flex col className="flex-auto h-[calc(100vh-150px)] overflow-hidden">
+    <Flex col className="flex-auto basis-[80%] h-[calc(100vh-150px)] overflow-hidden">
       <Flex className="mb-5 space-x-2 justify-end">
         <Filter
           name="보기개수"
@@ -51,9 +54,15 @@ const ProductsGrid = () => {
         />
       </Flex>
 
-      <Suspense fallback={<ProductsLoader cols={cols} />}>
-        <ProductList filter={{ cols, order }} className="flex-auto overflow-scroll" />
-      </Suspense>
+      <QueryErrorBoundary
+        fallbackRender={({ resetErrorBoundary }) => (
+          <ErrorFallback resetErrorBoundary={resetErrorBoundary} className="flex-auto" />
+        )}
+      >
+        <Suspense fallback={<ProductsLoader cols={cols} />}>
+          <ProductList filter={{ cols, order }} className="flex-auto overflow-scroll" />
+        </Suspense>
+      </QueryErrorBoundary>
     </Flex>
   );
 };
